@@ -1,26 +1,37 @@
 <?php
 
-$data = '1113222113';
-//$data = '1';
+/*
+ * Parts one and two are OK.
+ */
+
+$data = trim(file_get_contents('inputs/day-10.txt'));
 
 ini_set('memory_limit', -1);
 
-for ($x = 1; $x <= 50; $x++) {
-    $new = '';
-    $count = 0;
-    $prev = '';
+function calculate($input, $nb_iterations) {
+    for ($x = 1; $x <= $nb_iterations; $x++) {
+        $new    = '';
+        $count  = 0;
+        $prev   = '';
 
-    foreach (str_split($data) as $char) {
-        if ($prev !== $char && 0 < $count) {
-            $new .= $count.$prev;
-            $count = 0;
+        foreach (str_split($input) as $char) {
+            if ($prev !== $char && 0 < $count) {
+                $new    .= $count.$prev;
+                $count  = 0;
+            }
+
+            $count++;
+
+            $prev = $char;
         }
 
-        $count ++;
-        $prev = $char;
+        $input = $new.$count.$prev;
     }
 
-    $data = $new.$count.$prev;
+    return $input;
 }
 
-echo strlen($data).PHP_EOL;
+$one = calculate($data, 40);
+
+echo sprintf('First part: %u', strlen($one)).PHP_EOL;
+echo sprintf('Second part: %u', strlen(calculate($one, 10))).PHP_EOL;
