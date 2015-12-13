@@ -8,7 +8,7 @@ $data = trim(file_get_contents('inputs/day-05.txt'));
 
 function isValid($str) {
     return (
-        // three voyels
+        // three vowels
         preg_match('`(\w*[aeiou]\w*){3,}`', $str) &&
         // one repeating letter
         preg_match('`\w*(\w)\1\w*`', $str) &&
