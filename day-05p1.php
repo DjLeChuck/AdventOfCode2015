@@ -10,7 +10,7 @@ $forbidden  = ['ab', 'cd', 'pq', 'xy'];
 $alphabet   = [];
 $good       = [];
 
-foreach(range('a','z') as $i) {
+foreach (range('a', 'z') as $i) {
     $alphabet[] = $i.$i;
 }
 
