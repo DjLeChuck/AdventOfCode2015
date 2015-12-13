@@ -7,67 +7,50 @@
 $data       = trim(file_get_contents('inputs/day-03.txt'));
 $data_one   = str_split($data);
 $data_two   = str_split($data, 2);
-$map        = ['0,0' => 1];
-$i          = 0;
-$j          = 0;
+$map_one    = ['0,0' => 1];
+$map_two    = [['0,0' => 1], ['0,0' => 1]];
+$i_one      = 0;
+$j_one      = 0;
+$i_two      = [0 => 0, 1 => 0];
+$j_two      = [0 => 0, 1 => 0];
+$x          = 0;
 
 foreach ($data_one as $dir) {
-    if (!isset($map[sprintf('%d,%d', $i, $j)])) {
-        $map[sprintf('%d,%d', $i, $j)] = 1;
-    }
+    $x_mod = $x % 2;
 
     switch ($dir) {
         case '>':
-            $i++;
+            $i_one++;
+            $i_two[$x_mod]++;
             break;
         case '^':
-            $j++;
+            $j_one++;
+            $j_two[$x_mod]++;
             break;
         case 'v':
-            $j--;
+            $j_one--;
+            $j_two[$x_mod]--;
             break;
         case '<':
-            $i--;
+            $i_one--;
+            $i_two[$x_mod]--;
             break;
     }
 
-    $map[sprintf('%d,%d', $i, $j)]++;
-}
-
-echo sprintf('First part: %u', count($map)).PHP_EOL;
-
-$map    = [
-    ['0,0' => 1],
-    ['0,0' => 1],
-];
-$i      = [0 => 0, 1 => 0];
-$j      = [0 => 0, 1 => 0];
-
-foreach ($data_two as $subdata) {
-    foreach ([$subdata[0], $subdata[1]] as $x => $dir) {
-        if (!isset($map[$x][sprintf('%d,%d', $i[$x], $j[$x])])) {
-            $map[$x][sprintf('%d,%d', $i[$x], $j[$x])] = 1;
-        }
-
-        switch ($dir) {
-            case '>':
-                $i[$x]++;
-                break;
-            case '^':
-                $j[$x]++;
-                break;
-            case 'v':
-                $j[$x]--;
-                break;
-            case '<':
-                $i[$x]--;
-                break;
-        }
-
-        $map[$x][sprintf('%d,%d', $i[$x], $j[$x])]++;
-
-        $x++;
+    if (!isset($map_one[sprintf('%d,%d', $i_one, $j_one)])) {
+        $map_one[sprintf('%d,%d', $i_one, $j_one)] = 1;
     }
+
+    $map_one[sprintf('%d,%d', $i_one, $j_one)]++;
+
+    if (!isset($map_two[$x_mod][sprintf('%d,%d', $i_two[$x_mod], $j_two[$x_mod])])) {
+        $map_two[$x_mod][sprintf('%d,%d', $i_two[$x_mod], $j_two[$x_mod])] = 1;
+    }
+
+    $map_two[$x_mod][sprintf('%d,%d', $i_two[$x_mod], $j_two[$x_mod])]++;
+
+    $x++;
 }
 
-echo sprintf('Second part: %u', count(array_merge($map[0], $map[1]))).PHP_EOL;
+echo sprintf('First part: %u', count($map_one)).PHP_EOL;
+echo sprintf('Second part: %u', count(array_merge($map_two[0], $map_two[1]))).PHP_EOL;
