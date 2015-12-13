@@ -7,11 +7,7 @@
 $data = trim(file_get_contents('inputs/day-05.txt'));
 
 function isValid($str) {
-    $passed = [];
-
-    foreach (str_split($str) as $key => $char) {
-        $passed[$i] = $char;
-    }
+    return true;
 }
 
 $valid = 0;
