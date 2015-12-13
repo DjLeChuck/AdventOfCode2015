@@ -22,7 +22,7 @@ while (0 !== count($lines)) {
                 $num = $parts[0];
 
                 if (is_numeric($num)) {
-                    $num = ((int) ($num) & 0xFFFF);
+                    $num = ((int) $num & 0xFFFF);
                 } else {
                     if (isset($map[$num])) {
                         $num = $map[$num];
@@ -39,7 +39,7 @@ while (0 !== count($lines)) {
                 $num = $parts[1];
 
                 if (is_numeric($num)) {
-                    $num = ((int) ($num) & 0xFFFF);
+                    $num = ((int) $num & 0xFFFF);
                 } else {
                     if (isset($map[$num])) {
                         $num = $map[$num];
@@ -49,13 +49,13 @@ while (0 !== count($lines)) {
                     }
                 }
 
-                $map[$parts[3]] = (~ $num) & 0xFFFF;
+                $map[$parts[3]] = ~ $num & 0xFFFF;
                 break;
             case 5:
                 $a = $parts[0];
 
                 if (is_numeric($a)) {
-                    $a = ((int) ($a) & 0xFFFF);
+                    $a = ((int) $a & 0xFFFF);
                 } else {
                     if (isset($map[$a])) {
                         $a = $map[$a];
@@ -68,7 +68,7 @@ while (0 !== count($lines)) {
                 $b = $parts[2];
 
                 if (is_numeric($b)) {
-                    $b = ((int) ($b) & 0xFFFF);
+                    $b = ((int) $b & 0xFFFF);
                 } else {
                     if (isset($map[$b])) {
                         $b = $map[$b];
@@ -103,7 +103,6 @@ while (0 !== count($lines)) {
             unset($lines[$key]);
         }
     }
-
 }
 
 echo sprintf('First part: %u', $map['a']).PHP_EOL;
