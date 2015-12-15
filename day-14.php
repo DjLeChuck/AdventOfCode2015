@@ -12,7 +12,7 @@ $max                = ['first' => 0, 'second' => 0];
 foreach (explode("\n", $data) as $line) {
     $matches = [];
 
-    preg_match('`^([A-Z][a-z]*) can fly ([0-9]*) km/s for ([0-9]*) seconds, but then must rest for ([0-9]*) seconds\.$`', $line, $matches);
+    preg_match('`^([a-zA-Z]*) can fly ([0-9]*) km/s for ([0-9]*) seconds, but then must rest for ([0-9]*) seconds\.$`', $line, $matches);
 
     $scores[$matches[1]]    = 0;
     $reindeers[$matches[1]] = [
