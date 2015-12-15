@@ -5,7 +5,6 @@
  */
 
 $data   = trim(file_get_contents('inputs/day-13.txt'));
-$data   = trim(file_get_contents('inputs/test.txt'));
 $map    = [];
 
 foreach (explode("\n", $data) as $line) {
