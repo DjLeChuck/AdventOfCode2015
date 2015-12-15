@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Nothing is OK.
+ * Parts one and two are OK.
  */
 
 $data               = trim(file_get_contents('inputs/day-14.txt'));
