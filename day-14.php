@@ -5,13 +5,9 @@
  */
 
 $data               = trim(file_get_contents('inputs/day-14.txt'));
-/*$data = <<<DAT
-Comet can fly 14 km/s for 10 seconds, but then must rest for 127 seconds.
-Dancer can fly 16 km/s for 11 seconds, but then must rest for 162 seconds.
-DAT;*/
 $reindeers          = [];
-$scores             = [];
 $flying_duration    = 2503;
+$max                = ['first' => 0, 'second' => 0];
 
 foreach (explode("\n", $data) as $line) {
     $matches = [];
@@ -28,13 +24,19 @@ foreach (explode("\n", $data) as $line) {
             'fly'   => $matches[3],
             'rest'  => $matches[4],
         ],
+        'scores'    => [
+            'first'     => 0,
+            'second'    => 0,
+        ],
     ];
 }
 
 for ($x = 1; $x <= $flying_duration; $x++) {
+    $max_turn = 0;
+
     foreach ($reindeers as $reindeer => &$data) {
         if ('flying' === $data['action']) {
-            $scores[$reindeer] += $data['speed'];
+            $data['scores']['first'] += $data['speed'];
 
             --$data['countdown']['fly'];
 
@@ -52,9 +54,19 @@ for ($x = 1; $x <= $flying_duration; $x++) {
                 $data['countdown']['fly']   = $data['fly'];
             }
         }
+
+        $max_turn = max($max_turn, $data['scores']['first']);
+    }
+
+    foreach ($reindeers as &$data) {
+        if ($data['scores']['first'] === $max_turn) {
+            $data['scores']['second'] += 1;
+        }
+
+        $max['first']   = max($max['first'], $data['scores']['first']);
+        $max['second']  = max($max['second'], $data['scores']['second']);
     }
 }
 
-sort($scores);
-
-echo sprintf('First part: %u', end($scores)).PHP_EOL;
+echo sprintf('First part: %u', $max['first']).PHP_EOL;
+echo sprintf('Second part: %u', $max['second']).PHP_EOL;
